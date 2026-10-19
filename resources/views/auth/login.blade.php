@@ -49,7 +49,7 @@
             <label for="remember_me" class="flex min-w-0 cursor-pointer items-center gap-2.5 text-sm text-slate-600">
                 <input id="remember_me" type="checkbox"
                     class="shrink-0 rounded border-slate-300 text-teal-600 shadow-sm focus:ring-teal-500" name="remember">
-                <span>Remember me for 30 days</span>
+                <span>Remember me</span>
             </label>
 
             @if (Route::has('password.request'))
