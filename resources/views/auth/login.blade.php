@@ -31,17 +31,20 @@
         </div>
 
         <div>
-            <div class="mb-2 flex items-center justify-between">
-                <x-input-label for="password" :value="__('Password')" class="text-sm font-semibold text-slate-700" />
-            </div>
-            <div class="relative">
-                <x-heroicon-o-lock-closed
-                    class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-                <x-text-input id="password"
-                    class="block w-full rounded-xl border-slate-200 py-3 pl-11 pr-4 text-sm shadow-sm placeholder:text-slate-400 focus:border-slate-400 focus:ring-slate-300"
-                    type="password" name="password" required autocomplete="current-password"
-                    placeholder="Enter your password" />
-            </div>
+            <x-password-input
+                id="password"
+                name="password"
+                label="Password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+                :invalid="$errors->has('password')"
+                input-class="block w-full rounded-xl border-slate-200 py-3 pl-11 pr-12 text-sm shadow-sm placeholder:text-slate-400 focus:border-slate-400 focus:ring-slate-300"
+            >
+                <x-slot:leadingIcon>
+                    <x-heroicon-o-lock-closed class="h-5 w-5" />
+                </x-slot:leadingIcon>
+            </x-password-input>
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 

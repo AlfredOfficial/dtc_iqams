@@ -3,6 +3,9 @@
 import Alpine from 'alpinejs';
 import { installNavigationFeedback } from './navigation';
 import { createPollingTask } from './polling';
+import { installPasswordToggles } from './password-toggle';
+
+installPasswordToggles(document);
 
 window.createIqamsPollingTask = createPollingTask;
 
