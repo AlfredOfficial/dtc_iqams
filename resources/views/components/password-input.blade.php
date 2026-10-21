@@ -25,8 +25,8 @@
             class="absolute right-3 top-1/2 inline-flex -translate-y-1/2 items-center justify-center text-slate-400 transition hover:text-slate-700 focus:outline-none focus:text-slate-700"
             data-password-toggle data-password-target="{{ $id }}" data-password-label="{{ strtolower($label) }}"
             aria-label="Show {{ strtolower($label) }}" aria-pressed="false">
-            <x-heroicon-o-eye class="h-5 w-5" data-password-eye aria-hidden="true" />
-            <x-heroicon-o-eye-slash class="hidden h-5 w-5" data-password-eye-slash aria-hidden="true" />
+            <x-heroicon-o-eye class="hidden h-5 w-5" data-password-eye aria-hidden="true" />
+            <x-heroicon-o-eye-slash class="h-5 w-5" data-password-eye-slash aria-hidden="true" />
         </button>
     </div>
 </div>

@@ -2,8 +2,8 @@ const updatePasswordToggle = (button, input, visible) => {
     input.type = visible ? 'text' : 'password';
     button.setAttribute('aria-pressed', String(visible));
     button.setAttribute('aria-label', `${visible ? 'Hide' : 'Show'} ${button.dataset.passwordLabel || 'password'}`);
-    button.querySelector('[data-password-eye]')?.classList.toggle('hidden', visible);
-    button.querySelector('[data-password-eye-slash]')?.classList.toggle('hidden', !visible);
+    button.querySelector('[data-password-eye]')?.classList.toggle('hidden', !visible);
+    button.querySelector('[data-password-eye-slash]')?.classList.toggle('hidden', visible);
 };
 
 export const installPasswordToggles = (document) => {

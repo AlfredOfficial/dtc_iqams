@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('subject_code')->unique();
             $table->string('subject_name');
-            $table->decimal('units', 3, 1);
+            $table->unsignedTinyInteger('units');
             $table->timestamps();
         });
     }

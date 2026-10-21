@@ -54,6 +54,8 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'active', 'password.changed', 'redirect.non-admin.profile', 'role:admin'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->middleware('password.confirm')->name('profile.update');
+    Route::put('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo');
+    Route::delete('/profile/photo', [ProfileController::class, 'removePhoto'])->name('profile.photo.destroy');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->middleware('password.confirm')->name('profile.destroy');
 });
 

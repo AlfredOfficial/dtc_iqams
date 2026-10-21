@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use LogicException;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use LogicException;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -114,7 +114,7 @@ class User extends Authenticatable
         /** @var FilesystemAdapter $disk */
         $disk = Storage::disk('public');
 
-        return $disk->url($this->avatar_path);
+        return $disk->exists($this->avatar_path) ? $disk->url($this->avatar_path) : null;
     }
 
     public function getAvatarThumbnailUrlAttribute(): ?string

@@ -183,7 +183,7 @@
         class="w-full flex items-center gap-3 px-1 py-2 rounded-md hover:bg-gray-50 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         @if ($collapsible) :class="sidebarCollapsed ? 'justify-center' : ''" @endif
         aria-label="Open user menu" :aria-expanded="userMenuOpen">
-        @if (Auth::user()->avatar_url)
+        @if (Auth::user()->avatar_thumbnail_url)
             <img loading="lazy" width="32" height="32" src="{{ Auth::user()->avatar_thumbnail_url }}"
                 alt="" class="w-8 h-8 rounded-full object-cover shrink-0">
         @else

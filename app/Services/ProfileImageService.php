@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class ProfileImageService
@@ -22,8 +23,9 @@ class ProfileImageService
      * The database continues to point at the primary avatar path, so existing
      * avatar URL contracts remain unchanged.
      */
-    public function store(UploadedFile $file): string
+    public function store(UploadedFile $file, string $directory = 'avatars'): string
     {
+        $directory = trim(str_replace('\\', '/', $directory), '/');
         $contents = @file_get_contents($file->getRealPath());
         $source = $contents === false || ! function_exists('imagecreatefromstring')
             ? false
@@ -33,17 +35,18 @@ class ProfileImageService
         // formats that GD cannot decode. The validation rules still apply.
         if ($source === false || ! function_exists('imagejpeg')) {
             try {
-                $path = $file->store('avatars', 'public');
+                $path = $file->store($directory, 'public');
                 if (! $path) {
                     throw new \RuntimeException('Image storage failed.');
                 }
+
                 return $path;
             } catch (Throwable) {
-                throw \Illuminate\Validation\ValidationException::withMessages(['avatar' => 'The photo could not be stored. Please try again.']);
+                throw ValidationException::withMessages(['avatar' => 'The photo could not be stored. Please try again.']);
             }
         }
 
-        $path = 'avatars/'.Str::uuid().'.jpg';
+        $path = $directory.'/'.Str::uuid().'.jpg';
         $thumbnailPath = self::thumbnailPath($path);
         $disk = Storage::disk('public');
 
@@ -56,7 +59,7 @@ class ProfileImageService
             return $path;
         } catch (Throwable $exception) {
             $disk->delete([$path, $thumbnailPath]);
-            throw \Illuminate\Validation\ValidationException::withMessages(['avatar' => 'The photo could not be stored. Please try again.']);
+            throw ValidationException::withMessages(['avatar' => 'The photo could not be stored. Please try again.']);
         } finally {
             imagedestroy($source);
         }
@@ -86,7 +89,7 @@ class ProfileImageService
         return ($directory === '.' ? '' : $directory.'/').'thumbs/'.basename($path);
     }
 
-    private function encode($source, int $maxDimension, int $quality): string
+    private function encode(\GdImage $source, int $maxDimension, int $quality): string
     {
         $sourceWidth = imagesx($source);
         $sourceHeight = imagesy($source);
